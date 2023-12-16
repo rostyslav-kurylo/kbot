@@ -43,4 +43,4 @@ push:
 
 clean:
 	rm -rf kbot
-	docker rmi $(shell docker images -q | head -n 1)
+	docker rmi -f $(shell docker images -q | head -n 1)
