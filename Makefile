@@ -44,4 +44,4 @@ push:
 clean:
 	@rm -rf kbot; \
 	IMG=$$(docker images -q | head -n 1); \
-	if [ -n "$${IMG}" ]; then  docker rmi -f $${IMG}; else printf "$RImage not found!$D\n"; fi
+	if [ -n "$${IMG}" ]; then  docker rmi -f $${IMG}; else printf "$RNothing to remmove, Docker image not found!$D\n"; fi
