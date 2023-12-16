@@ -35,7 +35,7 @@ arm: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=arm go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
 	docker build --build-arg name=arm . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETOS}-arm
 
-image:
+image: build
 	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 push:
