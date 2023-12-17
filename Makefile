@@ -16,27 +16,27 @@ test:
 get:
 	go get
 
-build: get format
+build: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
 
-linux: get format
+linux: format get
 	CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
-	# docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} --build-arg name=linux
+	docker build . --build-arg name=linux -t ${REGESTRY}/${APP}:${VERSION}-linux-${TARGETARCH}
 
-windows: get format
+windows: format get
 	CGO_ENABLED=0 GOOS=windows GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
-	# docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} --build-arg name=windows
+	docker build . --build-arg name=windows -t ${REGESTRY}/${APP}:${VERSION}-windows-${TARGETARCH}
 
-macos: get format
+macos: format get
 	CGO_ENABLED=0 GOOS=darwin GOARCH=${TARGETARCH} go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
-	# docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} --build-arg name=macos
+	docker build . --build-arg name=darwin -t ${REGESTRY}/${APP}:${VERSION}-darwin-${TARGETARCH}
 
-arm: get format
+arm: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=arm go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
-	# docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} --build-arg name=arm
+	docker build . --build-arg name=arm -t ${REGESTRY}/${APP}:${VERSION}-${TARGETOS}-arm
 
-image:
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH} --build-arg name=${TARGETARCH}
+image: build
+	docker build . -t ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}-${TARGETARCH}
