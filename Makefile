@@ -31,8 +31,8 @@ macos: format get
 arm: format get
 	CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=arm go build -v -o kbot -ldflags "-X="github.com/rostyslav-kurylo/kbot/cmd.appVersion=${VERSION}
 
-image: build
-	docker build . -t ${REGISTRY}/${APP}:${VERSION}
+image:
+	docker build . -t ${REGISTRY}/${APP}:${VERSION} --platform $${GOOS:=linux}/$${GOARCH:=amd64}
 
 push:
 	docker push ${REGISTRY}/${APP}:${VERSION}
